@@ -58,6 +58,7 @@ namespace SimpleCalculator
             // 
             // txtInputWindows
             // 
+            txtInputWindows.BackColor = Color.FromArgb(224, 224, 224);
             txtInputWindows.Font = new Font("맑은 고딕", 20F, FontStyle.Regular, GraphicsUnit.Point, 129);
             txtInputWindows.Location = new Point(62, 197);
             txtInputWindows.Name = "txtInputWindows";
@@ -66,6 +67,7 @@ namespace SimpleCalculator
             // 
             // txtOutputWindows
             // 
+            txtOutputWindows.BackColor = Color.FromArgb(224, 224, 224);
             txtOutputWindows.Font = new Font("맑은 고딕", 20F, FontStyle.Regular, GraphicsUnit.Point, 129);
             txtOutputWindows.Location = new Point(62, 278);
             txtOutputWindows.Name = "txtOutputWindows";
@@ -84,17 +86,20 @@ namespace SimpleCalculator
             // 
             // btnFunctionCE
             // 
+            btnFunctionCE.BackColor = Color.Transparent;
             btnFunctionCE.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            btnFunctionCE.ForeColor = Color.FromArgb(64, 64, 64);
             btnFunctionCE.Location = new Point(62, 378);
             btnFunctionCE.Name = "btnFunctionCE";
             btnFunctionCE.Size = new Size(140, 61);
             btnFunctionCE.TabIndex = 3;
             btnFunctionCE.Text = "CE";
-            btnFunctionCE.UseVisualStyleBackColor = true;
+            btnFunctionCE.UseVisualStyleBackColor = false;
             // 
             // btnFunctionC
             // 
             btnFunctionC.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            btnFunctionC.ForeColor = Color.FromArgb(64, 64, 64);
             btnFunctionC.Location = new Point(208, 378);
             btnFunctionC.Name = "btnFunctionC";
             btnFunctionC.Size = new Size(140, 61);
@@ -105,29 +110,32 @@ namespace SimpleCalculator
             // 
             // btnFunctionDel
             // 
+            btnFunctionDel.BackColor = Color.Transparent;
             btnFunctionDel.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            btnFunctionDel.ForeColor = Color.FromArgb(64, 64, 64);
             btnFunctionDel.Location = new Point(354, 378);
             btnFunctionDel.Name = "btnFunctionDel";
             btnFunctionDel.Size = new Size(140, 61);
             btnFunctionDel.TabIndex = 5;
             btnFunctionDel.Text = "del";
-            btnFunctionDel.UseVisualStyleBackColor = true;
+            btnFunctionDel.UseVisualStyleBackColor = false;
             // 
             // btnOperatorDivide
             // 
+            btnOperatorDivide.BackColor = Color.Transparent;
             btnOperatorDivide.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnOperatorDivide.ForeColor = Color.Red;
+            btnOperatorDivide.ForeColor = Color.Maroon;
             btnOperatorDivide.Location = new Point(500, 378);
             btnOperatorDivide.Name = "btnOperatorDivide";
             btnOperatorDivide.Size = new Size(140, 61);
             btnOperatorDivide.TabIndex = 6;
             btnOperatorDivide.Text = "÷";
-            btnOperatorDivide.UseVisualStyleBackColor = true;
+            btnOperatorDivide.UseVisualStyleBackColor = false;
             // 
             // btnNumber7
             // 
             btnNumber7.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber7.ForeColor = Color.Blue;
+            btnNumber7.ForeColor = Color.RoyalBlue;
             btnNumber7.Location = new Point(62, 457);
             btnNumber7.Name = "btnNumber7";
             btnNumber7.Size = new Size(140, 61);
@@ -139,7 +147,7 @@ namespace SimpleCalculator
             // btnNumber8
             // 
             btnNumber8.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber8.ForeColor = Color.Blue;
+            btnNumber8.ForeColor = Color.RoyalBlue;
             btnNumber8.Location = new Point(208, 457);
             btnNumber8.Name = "btnNumber8";
             btnNumber8.Size = new Size(140, 61);
@@ -150,7 +158,7 @@ namespace SimpleCalculator
             // btnNumber9
             // 
             btnNumber9.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber9.ForeColor = Color.Blue;
+            btnNumber9.ForeColor = Color.RoyalBlue;
             btnNumber9.Location = new Point(354, 457);
             btnNumber9.Name = "btnNumber9";
             btnNumber9.Size = new Size(140, 61);
@@ -161,7 +169,7 @@ namespace SimpleCalculator
             // btnOperatorMultiply
             // 
             btnOperatorMultiply.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnOperatorMultiply.ForeColor = Color.Red;
+            btnOperatorMultiply.ForeColor = Color.Maroon;
             btnOperatorMultiply.Location = new Point(500, 457);
             btnOperatorMultiply.Name = "btnOperatorMultiply";
             btnOperatorMultiply.Size = new Size(140, 61);
@@ -172,7 +180,7 @@ namespace SimpleCalculator
             // btnNumber4
             // 
             btnNumber4.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber4.ForeColor = Color.Blue;
+            btnNumber4.ForeColor = Color.RoyalBlue;
             btnNumber4.Location = new Point(62, 539);
             btnNumber4.Name = "btnNumber4";
             btnNumber4.Size = new Size(140, 61);
@@ -183,7 +191,7 @@ namespace SimpleCalculator
             // btnNumber5
             // 
             btnNumber5.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber5.ForeColor = Color.Blue;
+            btnNumber5.ForeColor = Color.RoyalBlue;
             btnNumber5.Location = new Point(208, 539);
             btnNumber5.Name = "btnNumber5";
             btnNumber5.Size = new Size(140, 61);
@@ -194,7 +202,7 @@ namespace SimpleCalculator
             // btnNumber6
             // 
             btnNumber6.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber6.ForeColor = Color.Blue;
+            btnNumber6.ForeColor = Color.RoyalBlue;
             btnNumber6.Location = new Point(354, 539);
             btnNumber6.Name = "btnNumber6";
             btnNumber6.Size = new Size(140, 61);
@@ -205,7 +213,7 @@ namespace SimpleCalculator
             // btnOperatorSubtract
             // 
             btnOperatorSubtract.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnOperatorSubtract.ForeColor = Color.Red;
+            btnOperatorSubtract.ForeColor = Color.Maroon;
             btnOperatorSubtract.Location = new Point(500, 539);
             btnOperatorSubtract.Name = "btnOperatorSubtract";
             btnOperatorSubtract.Size = new Size(140, 61);
@@ -216,7 +224,7 @@ namespace SimpleCalculator
             // btnNumber1
             // 
             btnNumber1.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber1.ForeColor = Color.Blue;
+            btnNumber1.ForeColor = Color.RoyalBlue;
             btnNumber1.Location = new Point(62, 621);
             btnNumber1.Name = "btnNumber1";
             btnNumber1.Size = new Size(140, 61);
@@ -227,7 +235,7 @@ namespace SimpleCalculator
             // btnNumber2
             // 
             btnNumber2.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber2.ForeColor = Color.Blue;
+            btnNumber2.ForeColor = Color.RoyalBlue;
             btnNumber2.Location = new Point(208, 621);
             btnNumber2.Name = "btnNumber2";
             btnNumber2.Size = new Size(140, 61);
@@ -238,7 +246,7 @@ namespace SimpleCalculator
             // btnNumber3
             // 
             btnNumber3.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber3.ForeColor = Color.Blue;
+            btnNumber3.ForeColor = Color.RoyalBlue;
             btnNumber3.Location = new Point(354, 621);
             btnNumber3.Name = "btnNumber3";
             btnNumber3.Size = new Size(140, 61);
@@ -249,7 +257,7 @@ namespace SimpleCalculator
             // btnOperatorAdd
             // 
             btnOperatorAdd.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnOperatorAdd.ForeColor = Color.Red;
+            btnOperatorAdd.ForeColor = Color.Maroon;
             btnOperatorAdd.Location = new Point(500, 621);
             btnOperatorAdd.Name = "btnOperatorAdd";
             btnOperatorAdd.Size = new Size(140, 61);
@@ -260,7 +268,7 @@ namespace SimpleCalculator
             // btnNumber0
             // 
             btnNumber0.Font = new Font("맑은 고딕", 20F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnNumber0.ForeColor = Color.Blue;
+            btnNumber0.ForeColor = Color.RoyalBlue;
             btnNumber0.Location = new Point(208, 704);
             btnNumber0.Name = "btnNumber0";
             btnNumber0.Size = new Size(140, 61);
@@ -302,6 +310,7 @@ namespace SimpleCalculator
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(64, 64, 64);
             ClientSize = new Size(717, 890);
             Controls.Add(btnNegativeSign);
             Controls.Add(btnResult);
