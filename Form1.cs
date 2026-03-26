@@ -12,7 +12,7 @@ namespace SimpleCalculator
         {
             InitializeComponent();
 
-            // Wire all buttons to a single handler so every press is shown in txtInputWindows
+            // 모든 버튼을 단일 핸들러에 연결합니다. 버튼을 누른 모든 입력이 `txtInputWindows`에 표시됩니다.
             btnNumber0.Click += AnyButton_Click;
             btnNumber1.Click += AnyButton_Click;
             btnNumber2.Click += AnyButton_Click;
@@ -39,7 +39,7 @@ namespace SimpleCalculator
             btnResult.Click += AnyButton_Click;
         }
 
-        // Designer placeholders forward to common handler to avoid breaking designer event wiring.
+        // 디자이너가 연결한 이벤트를 유지하기 위해 플래이스홀더 핸들러를 공통 핸들러로 전달합니다.
         private void button2_Click(object sender, EventArgs e)
         {
             AnyButton_Click(sender, e);
@@ -50,9 +50,10 @@ namespace SimpleCalculator
             AnyButton_Click(sender, e);
         }
 
-        // Common handler: append pressed button text to txtInputWindows and show last pressed in txtOutputWindows.
-        // If '=' (btnResult) is pressed, evaluate the expression (two integer operands) and show result in txtOutputWindows
-        // while leaving txtInputWindows unchanged.
+        // 공통 핸들러: 눌린 버튼의 텍스트를 `txtInputWindows`에 누적하고
+        // 가장 최근에 누른 버튼 또는 현재 입력 중인 피연산자를 `txtOutputWindows`에 표시합니다.
+        // '='(결과) 버튼이 눌리면 입력된 식(두 개의 정수 피연산자)을 계산하여 결과를 `txtOutputWindows`에 표시하고
+        // `txtInputWindows`에는 결과를 덧붙여 보여줍니다.
         private void AnyButton_Click(object? sender, EventArgs e)
         {
             if (sender is not Button b)
@@ -60,10 +61,10 @@ namespace SimpleCalculator
 
             var text = b.Text ?? string.Empty;
 
-            // Handle clear/delete buttons first (they should not append their text)
+            // 먼저 지우기(CE/C) 및 삭제(del) 버튼을 처리합니다. 이 버튼들은 자신의 텍스트를 입력창에 추가하지 않습니다.
             if (b == btnFunctionC)
             {
-                // Full reset: clear both boxes and internal state
+                // 전체 초기화: 입력/출력창과 내부 상태를 모두 지웁니다.
                 txtInputWindows.Text = string.Empty;
                 txtOutputWindows.Text = string.Empty;
                 operandA = 0;
@@ -76,12 +77,12 @@ namespace SimpleCalculator
 
             if (b == btnFunctionCE)
             {
-                // Clear Entry: remove only the most recently entered operand (do not remove operator)
+                // CE(Entr y 지우기): 가장 최근에 입력된 피연산자 덩어리만 삭제합니다. 연산자는 남깁니다.
                 var rawFull = txtInputWindows.Text ?? string.Empty;
                 var eq = rawFull.IndexOf('=');
                 var input = eq >= 0 ? rawFull.Substring(0, eq) : rawFull;
 
-                // Split by spaces to handle the " <op> " formatting
+                // 연산자 양쪽에 공백을 넣는 포맷을 고려하여 공백으로 분할합니다.
                 var parts = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (parts.Count == 0)
                 {
@@ -91,10 +92,10 @@ namespace SimpleCalculator
                     return;
                 }
 
-                // Operators we recognize
+                // 인식 가능한 연산자 목록
                 var ops = new[] { "+", "-", "×", "÷", "*", "/" };
 
-                // Find last numeric token (operand) from the end and remove it
+                // 뒤에서부터 마지막 숫자 토큰(피연산자)을 찾아 제거합니다.
                 int removeIdx = -1;
                 for (int i = parts.Count - 1; i >= 0; i--)
                 {
@@ -110,11 +111,11 @@ namespace SimpleCalculator
                     parts.RemoveAt(removeIdx);
                 }
 
-                // Rebuild input with spaces
+                // 공백을 포함한 문자열로 다시 조합합니다.
                 var newInput = string.Join(' ', parts);
                 txtInputWindows.Text = newInput;
 
-                // Recalculate operator and current operand text
+                // 연산자와 현재 입력 중인 피연산자 텍스트를 재계산합니다.
                 int opIndex = -1;
                 string opToken = null;
                 for (int i = 0; i < parts.Count; i++)
@@ -155,7 +156,7 @@ namespace SimpleCalculator
 
             if (b == btnFunctionDel)
             {
-                // If there is a computed result (contains '='), delete from the result part only
+                // 이미 계산 결과( '=' 포함)가 있는 경우에는 결과 부분에서만 삭제합니다.
                 var full = txtInputWindows.Text ?? string.Empty;
                 var eqIdx = full.IndexOf('=');
                 if (eqIdx >= 0)
@@ -165,37 +166,38 @@ namespace SimpleCalculator
 
                     if (string.IsNullOrEmpty(resultPart))
                     {
-                        // nothing to delete from result, remove '=' marker
+                        // 결과에서 지울 것이 없으면 '=' 표시를 제거합니다.
                         txtInputWindows.Text = before;
                         currentOperandText = string.Empty;
                         txtOutputWindows.Text = string.Empty;
                         return;
                     }
 
-                    // remove last char from result part
+                    // 결과 부분에서 마지막 문자를 제거합니다.
                     resultPart = resultPart.Substring(0, Math.Max(0, resultPart.Length - 1));
 
                     if (string.IsNullOrEmpty(resultPart))
                     {
-                        // remove the whole result portion including '='
+                        // 결과가 빈 문자열이 되면 '='과 결과 전체를 제거합니다.
                         txtInputWindows.Text = before;
                         currentOperandText = string.Empty;
                         txtOutputWindows.Text = string.Empty;
                     }
                     else
                     {
+                        // 결과를 축소하여 다시 표시합니다.
                         txtInputWindows.Text = before + "=" + resultPart;
                         currentOperandText = resultPart;
                         txtOutputWindows.Text = resultPart;
                     }
 
-                    // remain in a state where operator is cleared (result shown)
+                    // 결과가 표시된 상태이므로 연산자 상태는 초기화합니다.
                     currentOperator = null;
                     waitingForOperandBStart = false;
                     return;
                 }
 
-                // Otherwise, operate on the visible input (no '=') - remove last character
+                // '='가 없을 경우: 입력창의 맨 끝 문자 하나를 삭제합니다.
                 var raw = txtInputWindows.Text ?? string.Empty;
                 if (string.IsNullOrEmpty(raw))
                 {
@@ -205,13 +207,13 @@ namespace SimpleCalculator
                     return;
                 }
 
-                // remove last character
+                // 마지막 문자를 제거합니다.
                 raw = raw.Substring(0, raw.Length - 1);
-                // trim any trailing spaces left by operator formatting so next delete acts on visible token
+                // 연산자 포맷으로 인해 남아 있을 수 있는 끝 공백을 제거합니다.
                 raw = raw.TrimEnd();
                 txtInputWindows.Text = raw;
 
-                // Re-evaluate current operator and operand texts after deletion
+                // 삭제 후 연산자와 피연산자 텍스트를 재계산합니다.
                 var ops = new[] { "+", "-", "×", "÷", "*", "/" };
                 int opIdx = -1;
                 string op = null;
@@ -237,12 +239,13 @@ namespace SimpleCalculator
                     else
                         operandA = 0;
 
+                    // 오른쪽 피연산자가 비어있으면 다음 입력을 operandB로 간주합니다.
                     waitingForOperandBStart = string.IsNullOrEmpty(right);
                     txtOutputWindows.Text = currentOperandText ?? string.Empty;
                     return;
                 }
 
-                // No operator present -> whole raw is current operand
+                // 연산자가 없으면 입력 전체가 현재 피연산자입니다.
                 currentOperator = null;
                 currentOperandText = raw;
                 if (!string.IsNullOrEmpty(raw) && int.TryParse(raw, out var aa))
