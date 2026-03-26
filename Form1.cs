@@ -4,6 +4,9 @@ namespace SimpleCalculator
     {
         private int operandA;
         private int operandB;
+        private string currentOperator;
+        private string currentOperandText = string.Empty;
+        private bool waitingForOperandBStart = false;
 
         public Form1()
         {
@@ -115,17 +118,75 @@ namespace SimpleCalculator
 
                 try
                 {
-                    int result = op switch
+                    // Prepare result text. For division use double and show decimals up to 6 places.
+                    if (op == "÷" || op == "/")
                     {
-                        "+" => operandA + operandB,
-                        "-" => operandA - operandB,
-                        "×" or "*" => operandA * operandB,
-                        "÷" or "/" => operandB == 0 ? throw new DivideByZeroException() : operandA / operandB,
-                        _ => throw new InvalidOperationException()
-                    };
+                        if (operandB == 0)
+                            throw new DivideByZeroException();
 
-                    resultText = result.ToString();
-                    txtInputWindows.Text = input + "=" + resultText;
+                        double dres = (double)operandA / operandB;
+                        // format with up to 6 decimal places, removing trailing zeros
+                        resultText = dres.ToString("0.######");
+                    }
+                    else
+                    {
+                        int ires = op switch
+                        {
+                            "+" => operandA + operandB,
+                            "-" => operandA - operandB,
+                            "×" or "*" => operandA * operandB,
+                            _ => throw new InvalidOperationException()
+                        };
+
+                        resultText = ires.ToString();
+                    }
+
+                    // Ensure the combined display (input + '=' + result) does not exceed available space.
+                    const int MaxTotalLength = 20; // keep within textbox width
+                    var display = input + "=" + resultText;
+                    if (display.Length > MaxTotalLength)
+                    {
+                        int allowedResultLen = Math.Max(1, MaxTotalLength - input.Length - 1);
+
+                        // If decimal, try reducing precision first
+                        if (resultText.Contains('.'))
+                        {
+                            if (double.TryParse(resultText, out var dv))
+                            {
+                                // try decreasing precision until it fits
+                                bool fitted = false;
+                                for (int prec = 6; prec >= 0; prec--)
+                                {
+                                    var fmt = prec == 0 ? "0" : "0." + new string('#', prec);
+                                    var candidate = dv.ToString(fmt);
+                                    if (candidate.Length <= allowedResultLen)
+                                    {
+                                        resultText = candidate;
+                                        fitted = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!fitted && resultText.Length > allowedResultLen)
+                                {
+                                    resultText = resultText.Substring(0, allowedResultLen);
+                                }
+                            }
+                            else if (resultText.Length > allowedResultLen)
+                            {
+                                resultText = resultText.Substring(0, allowedResultLen);
+                            }
+                        }
+                        else
+                        {
+                            if (resultText.Length > allowedResultLen)
+                                resultText = resultText.Substring(0, allowedResultLen);
+                        }
+
+                        display = input + "=" + resultText;
+                    }
+
+                    txtInputWindows.Text = display;
                     txtOutputWindows.Text = resultText;
                 }
                 catch (DivideByZeroException)
@@ -144,8 +205,47 @@ namespace SimpleCalculator
                 return;
             }
 
-            // For any other button: append its text to the input textbox and show it in the output textbox
+            // Operator buttons: store operandA, set operator state, append to input, do not show in output
+            if (b == btnOperatorAdd || b == btnOperatorSubtract || b == btnOperatorMultiply || b == btnOperatorDivide)
+            {
+                // store current operandA from currentOperandText
+                if (!int.TryParse(currentOperandText, out operandA))
+                {
+                    operandA = 0;
+                }
+
+                currentOperator = b.Text;
+                waitingForOperandBStart = true; // next number press should start operandB
+
+                // append operator to input (but do not change output)
+                txtInputWindows.Text += text;
+                return;
+            }
+
+            // For any other button: append its text to the input textbox
             txtInputWindows.Text += text;
+
+            // For numeric-like buttons (digits, dot, +/-) update currentOperandText and show full operand
+            bool isDigitButton = (b == btnNumber0 || b == btnNumber1 || b == btnNumber2 || b == btnNumber3 || b == btnNumber4 || b == btnNumber5 || b == btnNumber6 || b == btnNumber7 || b == btnNumber8 || b == btnNumber9);
+            if (isDigitButton || b == btnDot || b == btnNegativeSign)
+            {
+                if (waitingForOperandBStart)
+                {
+                    // start operandB fresh
+                    currentOperandText = text;
+                    waitingForOperandBStart = false;
+                }
+                else
+                {
+                    // continue building current operand
+                    currentOperandText += text;
+                }
+
+                txtOutputWindows.Text = currentOperandText;
+                return;
+            }
+
+            // For other non-operator buttons, just show the last pressed button text in output
             txtOutputWindows.Text = text;
         }
     }
